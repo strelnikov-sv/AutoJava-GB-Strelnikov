@@ -32,7 +32,7 @@ public class TriangleTest {
         }
 
         @Test
-        @DisplayName("Площадь треугольника со сторонами 3,4,5 расщитывается без ошибок")
+        @DisplayName("Площадь треугольника со сторонами 3,4,5 рассчитывается без ошибок")
         void areaCalculation() {
             Triangle triangle = new Triangle(3,4,5);
             assertEquals(triangle.area(),6);
