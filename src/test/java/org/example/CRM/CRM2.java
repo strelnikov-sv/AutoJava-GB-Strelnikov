@@ -1,6 +1,10 @@
 package org.example.CRM;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,6 +14,8 @@ import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CRM2 {
     private static final String LOGIN_PAGE_URL = "https://crm.geekbrains.space/user/login";
@@ -29,13 +35,44 @@ public class CRM2 {
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
     }
 
-    public static void main(String[] args) throws InterruptedException {
-        login();
+    private static void login() {
+        driver.get(LOGIN_PAGE_URL);
+
+        WebElement loginTextInput = driver.findElement(By.id("prependedInput"));
+        loginTextInput.sendKeys(STUDENT_LOGIN);
+
+        String loginText = loginTextInput.getAttribute("value");
+        assertEquals(STUDENT_LOGIN, loginText);
+
+        WebElement passwordTextInput = driver.findElement(By.name("_password"));
+        passwordTextInput.sendKeys(STUDENT_PASSWORD);
+
+        String passwordText = loginTextInput.getAttribute("value");
+        assertEquals(STUDENT_LOGIN, passwordText);
+
+        WebElement loginButton = driver.findElement(By.name("_submit"));
+        loginButton.click();
+
+        //Проверка, что открылась страница Панель быстрого запуска
+        String element = driver.findElement(By.xpath("//h1[contains(.,'Панель быстрого запуска')]")).getText();
+        Assertions.assertTrue(element.contains("Панель быстрого запуска"));
+    }
+
+    private static void filling() throws InterruptedException {
 
         driver.findElement(By.xpath("/html/body/div[2]/div/header/div[2]/ul/li[1]/a/span")).click();
         driver.findElement(By.xpath("/html/body/div[2]/div/header/div[2]/ul/li[1]/ul/li[5]")).click();
 
+        //Проверка, что открылась страница Контактные лица
+        String element = driver.findElement(By.xpath("//div[@id='breadcrumb']/ul/li[2]")).getText();
+        Assertions.assertTrue(element.contains("Контактные лица"));
+
         driver.findElement(By.linkText("Создать контактное лицо")).click();
+
+        //Проверка, что открылась страница Создать контактное лицо
+        String element2 = driver.findElement(By.cssSelector(".user-name")).getText();
+        Assertions.assertTrue(element2.contains("Создать контактное лицо"));
+
         driver.findElement(By.name("crm_contact[lastName]")).sendKeys("Тест0604111");
         driver.findElement(By.name("crm_contact[firstName]")).sendKeys("Тест0604111");
 
@@ -49,20 +86,23 @@ public class CRM2 {
 
         driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/div[3]/form/div[1]/div/div/div[2]/div[1]/div[4]/button")).click();
 
+        //Проверка, что открылась страница Все Контактные лица
+        String element3 = driver.findElement(By.cssSelector(".oro-subtitle")).getText();
+        Assertions.assertTrue(element3.contains("Все Контактные лица"));
+
         Thread.sleep(5000);
         driver.quit();
     }
 
-    private static void login() {
-        driver.get(LOGIN_PAGE_URL);
+    @Test
+    @Tag("Проверка успешного входа")
+    void testLogin() {
+        login();
+    }
 
-        WebElement loginTextInput = driver.findElement(By.id("prependedInput"));
-        loginTextInput.sendKeys(STUDENT_LOGIN);
-
-        WebElement passwordTextInput = driver.findElement(By.name("_password"));
-        passwordTextInput.sendKeys(STUDENT_PASSWORD);
-
-        WebElement loginButton = driver.findElement(By.name("_submit"));
-        loginButton.click();
+    @Test
+    @Tag("Заполнение")
+    void testFilling() throws InterruptedException {
+        filling();
     }
 }

@@ -1,17 +1,23 @@
 package org.example.project_reddit;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 
 import java.util.concurrent.TimeUnit;
 
+import static org.junit.Assert.assertEquals;
+
 // Вход в аккаунт Reddit.com
 
-public class Reddit1 {
+class Login {
     //Используется старая версия сайта, чтобы обойти ограничение капчи на вход
     private static final String LOGIN_PAGE_URL = "https://old.reddit.com/";
     private static final String USERNAME_LOGIN = "Test1212125";
@@ -30,14 +36,10 @@ public class Reddit1 {
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
     }
 
-    public static void main(String[] args) throws InterruptedException {
-        login();
+    @Test
+    @Tag("TestCorrectPassword")
+    void login() {
 
-        Thread.sleep(5000);
-        driver.quit();
-    }
-
-    private static void login(){
         driver.get(LOGIN_PAGE_URL);
 
         // Нажатие на кнопку Log in
@@ -47,11 +49,28 @@ public class Reddit1 {
         WebElement loginTextInput = driver.findElement(By.id("user_login"));
         loginTextInput.sendKeys(USERNAME_LOGIN);
 
+        //сравниваем логин из файла настроек
+        String loginText = loginTextInput.getAttribute("value");
+        assertEquals(USERNAME_LOGIN, loginText);
+
         //Ввод пароля
         WebElement passwordTextInput = driver.findElement(By.id("passwd_login"));
         passwordTextInput.sendKeys(USERNAME_PASSWORD);
 
+        String passwordText = loginTextInput.getAttribute("value");
+        assertEquals(USERNAME_PASSWORD, passwordText);
+
         //Нажатие на кнопку Войти
-        driver.findElement(By.xpath("/html/body/div[7]/div/div/div[2]/div/div[1]/div[1]/div[2]/div[2]/form/div[5]/button")).click();
+        WebElement login = driver.findElement(By.xpath("//*[@id=\"login-form\"]/div[5]/button"));
+        Actions builder = new Actions(driver);
+        builder
+                .click(login) // Нажать на кнопку
+                .build()
+                .perform();
+
+        //Thread.sleep(5000)
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        jsExecutor.executeAsyncScript("window.setTimeout(arguments[arguments.length - 1], 5000);");
+        driver.quit();
     }
 }
