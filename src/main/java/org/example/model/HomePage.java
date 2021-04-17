@@ -21,7 +21,7 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "/html/body/div[2]/div/header/div[2]/ul/li[1]/a/span")
     public WebElement counterparty;
 
-    @FindBy(xpath = "/html/body/div[2]/div/header/div[2]/ul/li[1]/ul/li[5]")
+    @FindBy(xpath = "//*[@id=\"main-menu\"]/ul/li[1]/ul/li[4]/a/span")
     public WebElement contactPersons;
 
 
@@ -42,12 +42,6 @@ public class HomePage extends BasePage {
                 .perform();
 
         myProject.click();
-
-
-        //Проверка, что открылась страница Мои проекты
-        String element = driver.findElement(By.cssSelector(".breadcrumb > li:nth-child(2)")).getText();
-        Assertions.assertTrue(element.contains("Мои проекты"));
-
         return new AllProjectPage(driver);
     }
 
@@ -58,11 +52,6 @@ public class HomePage extends BasePage {
                 .build()
                 .perform();
         contactPersons.click();
-
-        //Проверка, что открылась страница Контактные лица
-        String element = driver.findElement(By.xpath("//div[@id='breadcrumb']/ul/li[2]")).getText();
-        Assertions.assertTrue(element.contains("Контактные лица"));
-
         return new AllContacts(driver);
     }
 }
