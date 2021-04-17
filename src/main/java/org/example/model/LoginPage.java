@@ -1,5 +1,6 @@
 package org.example.model;
 
+import io.qameta.allure.Step;
 import org.example.common.Values;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,6 +19,7 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
+
     public void login() {
         driver.get(Values.LOGIN_PAGE_URL);
 
@@ -28,16 +30,19 @@ public class LoginPage extends BasePage {
         loginPage.submitButton.click();
     }
 
+    @Step(value = "Ввод логина")
     public LoginPage enterLogin(String login) {
         loginInput.sendKeys(login);
         return this;
     }
 
+    @Step(value = "Ввод пароля")
     public LoginPage enterPassword(String password) {
         loginInput.sendKeys(password);
         return this;
     }
 
+    @Step(value = "Вход в сиcтему")
     public HomePage clickLoginButton() {
         loginInput.click();
         return new HomePage(driver);

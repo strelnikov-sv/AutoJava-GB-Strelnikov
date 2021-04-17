@@ -1,34 +1,36 @@
 package org.example.CRM;
 
+import io.qameta.allure.Feature;
 import org.example.model.HomePage;
 import org.example.model.LoginPage;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-public class CRM2 extends BaseTest {
+public class CRM1Test extends BaseTest {
 
+    @Feature("Login CRM1")
     @BeforeEach
-    void testLogin2() {
+    void testLogin() {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login();
     }
 
+    @Feature("Заполнение CRM1")
     @Test
-    @Tag("Заполнение")
     void testFilling() {
-
         HomePage homePage = new HomePage(driver);
         homePage.checkUrl();
         homePage
-                .moveToMyContacts()
-                .clickOnCreateNewContact()
-                .enterLastName()
-                .enterFirstName()
+                .moveToMyProject()
+                .clickOnCreateNewProjectPage()
+                .enterNameField()
                 .clickOrganizationField()
                 .enterOrganizationView()
                 .clickOrganizationChoice()
-                .enterJobTitle()
+                .selectDivision()
+                .selectCurator()
+                .selectDirector()
+                .selectAdministrator()
                 .clickSubmit()
                 .checkPage();
     }

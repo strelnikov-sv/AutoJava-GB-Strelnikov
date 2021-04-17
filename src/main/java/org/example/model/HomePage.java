@@ -1,8 +1,7 @@
 package org.example.model;
 
+import io.qameta.allure.Step;
 import org.example.common.Values;
-import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -24,12 +23,11 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//*[@id=\"main-menu\"]/ul/li[1]/ul/li[4]/a/span")
     public WebElement contactPersons;
 
-
     public HomePage(WebDriver driver) {
         super(driver);
     }
 
-    //Проверка, что открылась нужная страница
+    @Step(value = "Проверка, что открылась нужная страница")
     public void checkUrl() {
         assertEquals(driver.getCurrentUrl(), Values.MENU_PAGE_URL);
     }

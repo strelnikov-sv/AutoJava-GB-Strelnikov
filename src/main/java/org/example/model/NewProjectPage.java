@@ -1,5 +1,6 @@
 package org.example.model;
 
+import io.qameta.allure.Step;
 import org.example.common.Values;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -39,50 +40,59 @@ public class NewProjectPage extends BasePage {
         super(driver);
     }
 
+    @Step(value = "Ввод Наименования")
     public NewProjectPage enterNameField() {
         nameField.sendKeys(Values.NAME_FIELD);
         return this;
     }
 
+    @Step(value = "Выбор поля организации")
     public NewProjectPage clickOrganizationField() {
         organizationField.click();
         return this;
     }
 
+    @Step(value = "Ввод названия организации")
     public NewProjectPage enterOrganizationView() {
         organizationView.sendKeys(Values.ORGANIZATION_VIEW);
         return this;
     }
 
+    @Step(value = "Выбор нужной организации")
     public NewProjectPage clickOrganizationChoice() {
         organizationChoice.click();
         return this;
     }
 
+    @Step(value = "Выбор подразделения")
     public NewProjectPage selectDivision() {
         Select Choice = new Select(division);
         Choice.selectByVisibleText(Values.DIVISION);
         return this;
     }
 
+    @Step(value = "Выбор куратор")
     public NewProjectPage selectCurator() {
         Select Choice = new Select(curator);
         Choice.selectByVisibleText(Values.NAME);
         return this;
     }
 
+    @Step(value = "Выбор руководителя")
     public NewProjectPage selectDirector() {
         Select Choice = new Select(director);
         Choice.selectByVisibleText(Values.NAME);
         return this;
     }
 
+    @Step(value = "Выбор админимтратора")
     public NewProjectPage selectAdministrator() {
         Select Choice = new Select(administrator);
         Choice.selectByVisibleText(Values.NAME);
         return this;
     }
 
+    @Step(value = "Сохранить и закрыть")
     public AllProjectPage clickSubmit() {
         submitButton.click();
         return new AllProjectPage(driver);

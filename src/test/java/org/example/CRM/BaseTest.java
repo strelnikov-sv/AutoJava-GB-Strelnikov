@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.logging.LogType;
 
 import java.util.concurrent.TimeUnit;
 
@@ -34,6 +35,14 @@ public abstract class BaseTest {
 
     @AfterEach
     void closeDriver() {
+        driver
+                .manage()
+                .logs()
+                .get(LogType.BROWSER)
+                .getAll()
+                .forEach(System.out::println);
+
+
         driver.close();
     }
 }

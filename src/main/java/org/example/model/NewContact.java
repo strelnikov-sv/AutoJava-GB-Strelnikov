@@ -1,5 +1,6 @@
 package org.example.model;
 
+import io.qameta.allure.Step;
 import org.example.common.Values;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -32,36 +33,43 @@ public class NewContact extends BasePage {
         super(driver);
     }
 
+    @Step(value = "Ввод Фамилии")
     public NewContact enterLastName() {
         lastName.sendKeys(Values.NAME_FIELD);
         return this;
     }
 
+    @Step(value = "Ввод Имени")
     public NewContact enterFirstName() {
         firstName.sendKeys(Values.NAME_FIELD);
         return this;
     }
 
+    @Step(value = "Выбор поля организации")
     public NewContact clickOrganizationField() {
         organizationField.click();
         return this;
     }
 
+    @Step(value = "Ввод названия организации")
     public NewContact enterOrganizationView() {
         organizationView.sendKeys(Values.ORGANIZATION_VIEW);
         return this;
     }
 
+    @Step(value = "Выбор нужной организации")
     public NewContact clickOrganizationChoice() {
         organizationChoice.click();
         return this;
     }
 
+    @Step(value = "Ввод Должности")
     public NewContact enterJobTitle() {
         jobTitle.sendKeys(Values.JOB_TITLE);
         return this;
     }
 
+    @Step(value = "Сохранить и закрыть")
     public AllContacts clickSubmit() {
         submitButton.click();
         return new AllContacts(driver);

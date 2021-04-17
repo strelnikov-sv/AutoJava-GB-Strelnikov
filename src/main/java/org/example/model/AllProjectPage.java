@@ -1,5 +1,6 @@
 package org.example.model;
 
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -20,7 +21,7 @@ public class AllProjectPage extends BasePage {
         return new NewProjectPage(driver);
     }
 
-    //Проверка, что открылась страница Все Проекты
+    @Step(value = "Проверка, что открылась страница Все Проекты")
     public AllProjectPage checkPage() {
         String element = driver.findElement(By.cssSelector(".oro-subtitle")).getText();
         Assertions.assertTrue(element.contains("Все Проекты"));
